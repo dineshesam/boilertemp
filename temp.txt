@@ -1,0 +1,6 @@
+development concepts. Areas to focus on include:
+Localization and internationalization
+Effective handling of images and colors in light/dark mode
+Redux for state management
+Local storage mechanisms
+useRef and React.memo for performance optimization
