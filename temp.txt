@@ -4,3 +4,219 @@ Effective handling of images and colors in light/dark mode
 Redux for state management
 Local storage mechanisms
 useRef and React.memo for performance optimization
+
+
+
+import React, { useCallback, useEffect, useState } from 'react';
+import {
+  ActivityIndicator,
+  FlatList,
+  Image,
+  RefreshControl,
+  SafeAreaView,
+  StatusBar,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+
+// ▶️ Set this depending on where your server runs relative to the app
+// Android Emulator: 'http://10.0.2.2:4000'
+// iOS Simulator:    'http://localhost:4000'
+// Real device:      'http://<your-lan-ip>:4000'
+const BASE_URL = 'http://192.168.18.70:4000';
+
+const PAGE_SIZE = 12;
+
+export default function App() {
+  const [items, setItems] = useState([]);
+  const [page, setPage] = useState(1);
+  const [total, setTotal] = useState(null);
+  const [loading, setLoading] = useState(true);        // first load
+  const [loadingMore, setLoadingMore] = useState(false); // pagination
+  const [refreshing, setRefreshing] = useState(false); // pull to refresh
+  const [error, setError] = useState('');
+
+  const fetchProducts = useCallback(async (pageNo = 1, append = false) => {
+    try {
+      if (append) setLoadingMore(true);
+      else setLoading(true);
+
+      setError('');
+      const url = `${BASE_URL}/api/products?page=${pageNo}&limit=${PAGE_SIZE}`;
+      const res = await fetch(url);
+      if (!res.ok) {
+        const txt = await res.text();
+        throw new Error(`HTTP ${res.status}: ${txt}`);
+      }
+      const data = await res.json(); // { items, total, page, limit }
+      setTotal(data.total ?? 0);
+      if (append) {
+        setItems(prev => [...prev, ...(data.items || [])]);
+      } else {
+        setItems(data.items || []);
+      }
+      setPage(pageNo);
+    } catch (e) {
+      setError(e?.message || 'Failed to load products.');
+    } finally {
+      setLoading(false);
+      setLoadingMore(false);
+      setRefreshing(false);
+    }
+  }, []);
+
+  // initial load
+  useEffect(() => {
+    fetchProducts(1, false);
+  }, [fetchProducts]);
+
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    fetchProducts(1, false);
+  }, [fetchProducts]);
+
+  const onEndReached = useCallback(() => {
+    if (loading || loadingMore) return;
+    const canLoadMore = total == null ? true : items.length < total;
+    if (!canLoadMore) return;
+    fetchProducts(page + 1, true);
+  }, [loading, loadingMore, total, items.length, page, fetchProducts]);
+
+  const renderItem = ({ item }) => (
+    <TouchableOpacity activeOpacity={0.8} style={styles.card}>
+      <Image
+        source={
+          item.images?.length
+            ? { uri: makeImageUrl(item.images[0]) }
+            : require('./assets/placeholder.png') // <- add any placeholder image to your project
+        }
+        style={styles.image}
+        resizeMode="cover"
+        onError={() => {}}
+      />
+      <View style={styles.cardBody}>
+        <Text style={styles.title} numberOfLines={2}>
+          {item.name || 'Unnamed'}
+        </Text>
+        {typeof item.price === 'number' ? (
+          <Text style={styles.price}>₹ {item.price.toLocaleString('en-IN')}</Text>
+        ) : (
+          <Text style={styles.price}>Price NA</Text>
+        )}
+        {item.category ? (
+          <Text style={styles.meta}>Category: {item.category}</Text>
+        ) : null}
+        {typeof item.stock === 'number' ? (
+          <Text style={[styles.meta, item.stock > 0 ? styles.inStock : styles.outOfStock]}>
+            {item.stock > 0 ? `In Stock (${item.stock})` : 'Out of Stock'}
+          </Text>
+        ) : null}
+      </View>
+    </TouchableOpacity>
+  );
+
+  const keyExtractor = (it, idx) => String(it.id ?? idx);
+
+  if (loading && !items.length) {
+    return (
+      <SafeAreaView style={styles.centered}>
+        <StatusBar barStyle="dark-content" />
+        <ActivityIndicator size="large" color="#0a84ff" />
+        <Text style={styles.loadingText}>Loading products…</Text>
+        {error ? <Text style={styles.error}>{error}</Text> : null}
+        <View style={styles.hintBox}>
+          <Text style={styles.hint}>
+            If this hangs, confirm your server URL in App.js:
+            {'\n'}• Android Emulator → http://10.0.2.2:4000
+            {'\n'}• iOS Simulator → http://localhost:4000
+            {'\n'}• Real Device → http://192.168.18.70:4000
+          </Text>
+        </View>
+      </SafeAreaView>
+    );
+  }
+
+  return (
+    <SafeAreaView style={styles.container}>
+      <StatusBar barStyle="dark-content" />
+      <View style={styles.header}>
+        <Text style={styles.headerTitle}>Products</Text>
+        <Text style={styles.headerMeta}>
+          {total != null ? `${items.length} / ${total}` : `${items.length}`}
+        </Text>
+      </View>
+
+      {error ? <Text style={styles.error}>{error}</Text> : null}
+
+      <FlatList
+        contentContainerStyle={styles.listContent}
+        data={items}
+        keyExtractor={keyExtractor}
+        renderItem={renderItem}
+        numColumns={2}
+        columnWrapperStyle={{ gap: 12 }}
+        ItemSeparatorComponent={() => <View style={{ height: 12 }} />}
+        ListFooterComponent={() =>
+          loadingMore ? (
+            <View style={{ paddingVertical: 16 }}>
+              <ActivityIndicator size="small" color="#0a84ff" />
+            </View>
+          ) : null
+        }
+        onEndReachedThreshold={0.5}
+        onEndReached={onEndReached}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor="#0a84ff" />
+        }
+      />
+    </SafeAreaView>
+  );
+}
+
+function makeImageUrl(relativeOrAbsolute) {
+  // If the backend returns relative paths like "/data/images/earphones.jpg",
+  // make them absolute by prefixing BASE_URL.
+  if (!relativeOrAbsolute) return '';
+  if (/^https?:\/\//i.test(relativeOrAbsolute)) return relativeOrAbsolute;
+  return `${BASE_URL}${relativeOrAbsolute}`;
+}
+
+const styles = StyleSheet.create({
+  container: { flex: 1, backgroundColor: '#fff' },
+  centered: { flex: 1, alignItems: 'center', justifyContent: 'center', padding: 24 },
+  loadingText: { marginTop: 12, fontSize: 16, color: '#333' },
+  error: { marginTop: 8, color: '#d00', textAlign: 'center' },
+  hintBox: { marginTop: 12, padding: 10, backgroundColor: '#f6f8fa', borderRadius: 8 },
+  hint: { fontSize: 12, color: '#555' },
+
+  header: {
+    paddingHorizontal: 16,
+    paddingTop: 12,
+    paddingBottom: 8,
+    flexDirection: 'row',
+    alignItems: 'flex-end',
+    justifyContent: 'space-between',
+  },
+  headerTitle: { fontSize: 22, fontWeight: '700', color: '#111' },
+  headerMeta: { fontSize: 13, color: '#666' },
+
+  listContent: { padding: 12 },
+
+  card: {
+    flex: 1,
+    backgroundColor: '#fff',
+    borderRadius: 12,
+    overflow: 'hidden',
+    borderColor: '#eee',
+    borderWidth: 1,
+  },
+  image: { width: '100%', aspectRatio: 1 },
+  cardBody: { padding: 10, gap: 6 },
+  title: { fontSize: 14, fontWeight: '600', color: '#222' },
+  price: { fontSize: 14, fontWeight: '700', color: '#0a7f2e' },
+  meta: { fontSize: 12, color: '#666' },
+  inStock: { color: '#0a7f2e' },
+  outOfStock: { color: '#a00' },
+});
