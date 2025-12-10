@@ -1,42 +1,11 @@
-http://localhost:4000/api/addresses/my
+App.js:10 Warning: Error: ❗ FOUND — TEXT OUTSIDE <Text>
 
-well in postman i got this for the api above
-
-[
-    {
-        "id": 2,
-        "name": "",
-        "phoneNo": "",
-        "pincode": "",
-        "state": "",
-        "city": "",
-        "buildingName": "",
-        "area": "",
-        "type": "",
-        "location": ""
-    },
-    {
-        "id": 3,
-        "name": "kick",
-        "phoneNo": "9999",
-        "pincode": "",
-        "state": "telgnaa",
-        "city": "hyd",
-        "buildingName": "",
-        "area": "",
-        "type": "",
-        "location": ""
-    },
-    {
-        "id": 4,
-        "name": "kick",
-        "phoneNo": "9999",
-        "pincode": "",
-        "state": "telgnaa",
-        "city": "hyd",
-        "buildingName": "",
-        "area": "",
-        "type": "",
-        "location": ""
-    }
-]
+This error is located at:
+    at Provider (http://localhost:8081/index.bundle//&platform=android&dev=true&lazy=true&mi…ly=false&runModule=true&excludeSource=true&sourcePaths=url-server:99768:33)
+    at App (<anonymous>)
+    at RCTView (<anonymous>)
+    at View (http://localhost:8081/index.bundle//&platform=android&dev=true&lazy=true&mi…nly=false&runModule=true&excludeSource=true&sourcePaths=url-server:5563:43)
+    at RCTView (<anonymous>)
+    at View (http://localhost:8081/index.bundle//&platform=android&dev=true&lazy=true&mi…nly=false&runModule=true&excludeSource=true&sourcePaths=url-server:5563:43)
+    at AppContainer (http://localhost:8081/index.bundle//&platform=android&dev=true&lazy=true&mi…ly=false&runModule=true&excludeSource=true&sourcePaths=url-server:51555:25)
+    at ecommerce(RootComponent) (http://localhost:8081/index.bundle//&platform=android&dev=true&lazy=true&mi…ly=false&runModule=true&excludeSource=true&sourcePaths=url-server:68437:28), js engine: hermes
