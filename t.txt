@@ -1,11 +1,16 @@
-App.js:10 Warning: Error: ❗ FOUND — TEXT OUTSIDE <Text>
+🔍 ********  TEXT OUTSIDE <Text> FOUND  ********
 
-This error is located at:
-    at Provider (http://localhost:8081/index.bundle//&platform=android&dev=true&lazy=true&mi…ly=false&runModule=true&excludeSource=true&sourcePaths=url-server:99768:33)
-    at App (<anonymous>)
-    at RCTView (<anonymous>)
-    at View (http://localhost:8081/index.bundle//&platform=android&dev=true&lazy=true&mi…nly=false&runModule=true&excludeSource=true&sourcePaths=url-server:5563:43)
-    at RCTView (<anonymous>)
-    at View (http://localhost:8081/index.bundle//&platform=android&dev=true&lazy=true&mi…nly=false&runModule=true&excludeSource=true&sourcePaths=url-server:5563:43)
-    at AppContainer (http://localhost:8081/index.bundle//&platform=android&dev=true&lazy=true&mi…ly=false&runModule=true&excludeSource=true&sourcePaths=url-server:51555:25)
-    at ecommerce(RootComponent) (http://localhost:8081/index.bundle//&platform=android&dev=true&lazy=true&mi…ly=false&runModule=true&excludeSource=true&sourcePaths=url-server:68437:28), js engine: hermes
+App.js:10 STACK TRACE:
+ Error
+    at anonymous (http://localhost:8081/index.bundle//&platform=android&dev=true&lazy=true&minify=false&app=com.ecommerce&modulesOnly=false&runModule=true&excludeSource=true&sourcePaths=url-server:98250:46)
+    at createTextInstance (http://localhost:8081/index.bundle//&platform=android&dev=true&lazy=true&minify=false&app=com.ecommerce&modulesOnly=false&runModule=true&excludeSource=true&sourcePaths=url-server:15760:51)
+    at completeWork (http://localhost:8081/index.bundle//&platform=android&dev=true&lazy=true&minify=false&app=com.ecommerce&modulesOnly=false&runModule=true&excludeSource=true&sourcePaths=url-server:13471:58)
+    at runWithFiberInDEV (http://localhost:8081/index.bundle//&platform=android&dev=true&lazy=true&minify=false&app=com.ecommerce&modulesOnly=false&runModule=true&excludeSource=true&sourcePaths=url-server:9237:135)
+    at completeUnitOfWork (http://localhost:8081/index.bundle//&platform=android&dev=true&lazy=true&minify=false&app=com.ecommerce&modulesOnly=false&runModule=true&excludeSource=true&sourcePaths=url-server:15002:36)
+    at performUnitOfWork (http://localhost:8081/index.bundle//&platform=android&dev=true&lazy=true&minify=false&app=com.ecommerce&modulesOnly=false&runModule=true&excludeSource=true&sourcePaths=url-server:14940:44)
+    at workLoopSync (http://localhost:8081/index.bundle//&platform=android&dev=true&lazy=true&minify=false&app=com.ecommerce&modulesOnly=false&runModule=true&excludeSource=true&sourcePaths=url-server:14831:57)
+    at renderRootSync (http://localhost:8081/index.bundle//&platform=android&dev=true&lazy=true&minify=false&app=com.ecommerce&modulesOnly=false&runModule=true&excludeSource=true&sourcePaths=url-server:14815:21)
+    at performWorkOnRoot (http://localhost:8081/index.bundle//&platform=android&dev=true&lazy=true&minify=false&app=com.ecommerce&modulesOnly=false&runModule=true&excludeSource=true&sourcePaths=url-server:14563:90)
+    at performWorkOnRootViaSchedulerTask (http://localhost:8081/index.bundle//&platform=android&dev=true&lazy=true&minify=false&app=com.ecommerce&modulesOnly=false&runModule=true&excludeSource=true&sourcePaths=url-server:10578:24)
+App.js:11 
+**********************************************
