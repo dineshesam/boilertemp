@@ -1,6 +1,7 @@
 Running "ecommerce" with {"rootTag":21,"initialProps":{},"fabric":true}
 App.js:10 
 
+https://ecom-backend-mongodb.onrender.com
 💥 TEXT WARNING DETECTED — Locating component...
 
 App.js:13 →     at createTextInstance (http://localhost:8081/index.bundle//&platform=android&dev=true&lazy=true&minify=false&app=com.ecommerce&modulesOnly=false&runModule=true&excludeSource=true&sourcePaths=url-server:15760:51)
