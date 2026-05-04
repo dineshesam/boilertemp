@@ -1,17 +1,22 @@
-Running "ecommerce" with {"rootTag":21,"initialProps":{},"fabric":true}
-App.js:10 
+will at this id w9q6w
+: qa was saying this 
+Steps to Reproduce:
+1. Login to Maximo application as Agent
+2. Navigate to Service Delivery
+3. Open any ticket from My Incident section
+4. Click on Action menu button
+5. Select Global Setting option a dialog will open
+6. Check 'Is global issue' toggel button
+7. Now click on cancel button
+8. Again click on Global setting option notice that 'Is global issue'  toggle button is already checked ---Issue
 
-https://ecom-backend-mongodb.onrender.com
-💥 TEXT WARNING DETECTED — Locating component...
 
-App.js:13 →     at createTextInstance (http://localhost:8081/index.bundle//&platform=android&dev=true&lazy=true&minify=false&app=com.ecommerce&modulesOnly=false&runModule=true&excludeSource=true&sourcePaths=url-server:15760:51)
-App.js:13 →     at completeWork (http://localhost:8081/index.bundle//&platform=android&dev=true&lazy=true&minify=false&app=com.ecommerce&modulesOnly=false&runModule=true&excludeSource=true&sourcePaths=url-server:13471:58)
-App.js:13 →     at runWithFiberInDEV (http://localhost:8081/index.bundle//&platform=android&dev=true&lazy=true&minify=false&app=com.ecommerce&modulesOnly=false&runModule=true&excludeSource=true&sourcePaths=url-server:9237:135)
-App.js:13 →     at completeUnitOfWork (http://localhost:8081/index.bundle//&platform=android&dev=true&lazy=true&minify=false&app=com.ecommerce&modulesOnly=false&runModule=true&excludeSource=true&sourcePaths=url-server:15002:36)
-App.js:13 →     at performUnitOfWork (http://localhost:8081/index.bundle//&platform=android&dev=true&lazy=true&minify=false&app=com.ecommerce&modulesOnly=false&runModule=true&excludeSource=true&sourcePaths=url-server:14940:44)
-App.js:13 →     at workLoopSync (http://localhost:8081/index.bundle//&platform=android&dev=true&lazy=true&minify=false&app=com.ecommerce&modulesOnly=false&runModule=true&excludeSource=true&sourcePaths=url-server:14831:57)
-App.js:13 →     at renderRootSync (http://localhost:8081/index.bundle//&platform=android&dev=true&lazy=true&minify=false&app=com.ecommerce&modulesOnly=false&runModule=true&excludeSource=true&sourcePaths=url-server:14815:21)
-App.js:13 →     at performWorkOnRoot (http://localhost:8081/index.bundle//&platform=android&dev=true&lazy=true&minify=false&app=com.ecommerce&modulesOnly=false&runModule=true&excludeSource=true&sourcePaths=url-server:14563:90)
-App.js:13 →     at performWorkOnRootViaSchedulerTask (http://localhost:8081/index.bundle//&platform=android&dev=true&lazy=true&minify=false&app=com.ecommerce&modulesOnly=false&runModule=true&excludeSource=true&sourcePaths=url-server:10578:24)
-App.js:15 
-⚠ Open top-most file from the trace — that’s where <Text> is missing.
+Actual Result: 'Is global' toggle button keeps the last selection even if the user cancel and didn't change the Global value
+Expected Result : If user cancel the dialog then changes done on previous should not reflect on new dialog
+
+
+note: its ibm graphite framework
+so keep that in mind
+
+
+here is the file 
